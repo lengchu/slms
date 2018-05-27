@@ -67,11 +67,11 @@ public interface UserService {
     BufferedImage genImgCode(String code);
 
     /**
-     * 1.9 生成指定长度的随机字符串
+     * 1.9 生成指定长度的随机长度字符
      * @param length 指定长度
-     * @return 随机字符串
+     * @return 随机字符数组
      */
-    String genRandCode(int length);
+    char[] genRandCode(int length);
 
     /**
      * 1.10 查询指定时间段注册的用户

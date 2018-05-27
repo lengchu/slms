@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.awt.image.BufferedImage;
 import java.util.Date;
+import java.util.Random;
 
 @Transactional
 @Service
@@ -104,14 +105,28 @@ public class UserServiceImpl implements cn.lenchu.slms.service.UserService {
         return null;
     }
 
-    /**TODO
-     * 1.9 生成指定长度的随机字符串
+    /**
+     * 1.9 生成指定长度的随机长度字符
      * @param length 指定长度
-     * @return 随机字符串
+     * @return 随机字符数组
      */
     @Override
-    public String genRandCode(int length) {
-        return null;
+    public char[] genRandCode(int length) {
+        // 48-57 - 0-9  65-90 A-Z  97-122 a-z
+        Random r = new Random();
+        r.setSeed(System.currentTimeMillis() + Thread.currentThread().getId());
+        char[] result = new char[length];
+        for (int i = 0; i < length; i++) {
+            int rand = r.nextInt(61);
+            if (rand < 10) {
+                result[i] = (char)(rand + 48);
+            } else if (rand > 35) {
+                result[i] = (char)(rand + 61);
+            } else {
+                result[i] = (char)(rand + 55);
+            }
+        }
+        return result;
     }
 
     /**
