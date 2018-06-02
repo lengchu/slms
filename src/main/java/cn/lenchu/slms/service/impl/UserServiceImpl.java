@@ -4,9 +4,7 @@ import cn.lenchu.slms.entity.User;
 import cn.lenchu.slms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,10 +16,14 @@ import java.util.Random;
 @Service
 public class UserServiceImpl implements cn.lenchu.slms.service.UserService {
 
-    @Autowired
-    private UserRepository userDao;
+    private final UserRepository userDao;
 
-    /**
+    @Autowired
+    public UserServiceImpl(UserRepository userDao) {
+		this.userDao = userDao;
+	}
+
+	/**
      * 1.1 邮箱是否已注册
      * @param email 邮箱
      * @return true: 已被注册  false: 未被注册
