@@ -69,9 +69,10 @@ public interface UserService {
     /**
      * 1.9 生成指定长度的随机长度字符
      * @param length 指定长度
+     * @param numOnly 是否纯数字
      * @return 随机字符数组
      */
-    char[] genRandCode(int length);
+    char[] genRandCode(int length, boolean numOnly);
 
     /**
      * 1.10 查询指定时间段注册的用户

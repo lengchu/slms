@@ -5,6 +5,9 @@ import cn.lenchu.slms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,10 +20,12 @@ import java.util.Random;
 public class UserServiceImpl implements cn.lenchu.slms.service.UserService {
 
     private final UserRepository userDao;
+    private final JavaMailSender mailSender;
 
     @Autowired
-    public UserServiceImpl(UserRepository userDao) {
+    public UserServiceImpl(UserRepository userDao, JavaMailSender mailSender) {
 		this.userDao = userDao;
+		this.mailSender = mailSender;
 	}
 
 	/**
@@ -46,14 +51,21 @@ public class UserServiceImpl implements cn.lenchu.slms.service.UserService {
         return userDao.save(user);
     }
 
-    /**TODO
+    /**
      * 1.3 发送邮箱验证码
      * @param email 邮箱
      * @return 验证码
      */
     @Override
     public String sendEmailCode(String email) {
-        return null;
+    	SimpleMailMessage msg = new SimpleMailMessage();
+    	msg.setTo(email);
+    	msg.setSubject("验证码");
+    	String code = new String(this.genRandCode(6, true));
+    	msg.setFrom(((JavaMailSenderImpl)mailSender).getUsername());
+    	msg.setText("您的验证码是: " + code + ", 请尽快完成验证!");
+    	mailSender.send(msg);
+        return code;
     }
 
     /**TODO
@@ -110,16 +122,17 @@ public class UserServiceImpl implements cn.lenchu.slms.service.UserService {
     /**
      * 1.9 生成指定长度的随机长度字符
      * @param length 指定长度
+     * @param numOnly 是否纯数字
      * @return 随机字符数组
      */
     @Override
-    public char[] genRandCode(int length) {
+    public char[] genRandCode(int length, boolean numOnly) {
         // 48-57 - 0-9  65-90 A-Z  97-122 a-z
         Random r = new Random();
         r.setSeed(System.currentTimeMillis() + Thread.currentThread().getId());
         char[] result = new char[length];
         for (int i = 0; i < length; i++) {
-            int rand = r.nextInt(61);
+            int rand = numOnly ? r.nextInt(10) : r.nextInt(62);
             if (rand < 10) {
                 result[i] = (char)(rand + 48);
             } else if (rand > 35) {
