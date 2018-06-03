@@ -9,6 +9,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import javax.transaction.Transactional;
 import java.awt.image.BufferedImage;
@@ -68,20 +69,20 @@ public class UserServiceImpl implements cn.lenchu.slms.service.UserService {
         return code;
     }
 
-    /**TODO
+    /**
      * 1.4 加密密码
      * @param orgPwd 未加密的密码
      * @return 已加密的密码
      */
     @Override
     public String encryptPwd(String orgPwd) {
-        return orgPwd;
+        return DigestUtils.md5DigestAsHex(orgPwd.getBytes());
     }
 
     /**
      * 1.5 登录
      * @param email 邮箱
-     * @param pwd 原始密码
+     * @param orgPwd 原始密码
      * @return User对象,空对象则登录失败
      */
     @Override
