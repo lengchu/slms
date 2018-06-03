@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import javax.transaction.Transactional;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.Random;
@@ -110,14 +111,37 @@ public class UserServiceImpl implements cn.lenchu.slms.service.UserService {
         return userDao.findAll(pageable);
     }
 
-    /**TODO
+    /**
      * 1.8 生成图片验证码
-     * @param code 验证码
+     * @param codes 验证码
+     * @param imgType 图片格式
      * @return 图片验证码对象
      */
     @Override
-    public BufferedImage genImgCode(String code) {
-        return null;
+    public BufferedImage genImgCode(char[] codes, String imgType) throws Exception {
+        int imgWidth = codes.length * 40;
+
+        BufferedImage img = new BufferedImage(imgWidth, 40, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = img.createGraphics();
+
+        Random r = new Random();
+        r.setSeed(System.currentTimeMillis() + Thread.currentThread().getId());
+        g.setBackground(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
+        g.clearRect(0,0, imgWidth,40);
+        Thread.sleep(1);
+
+        for (int i = 0; i < codes.length; i++) {
+            g.setColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
+            g.setFont(new Font("Fixedsys", Font.BOLD, 35));
+            g.drawLine(r.nextInt(imgWidth),r.nextInt(40),r.nextInt(imgWidth), r.nextInt(40));
+            Thread.sleep(1);
+            g.drawLine(r.nextInt(imgWidth),r.nextInt(40),r.nextInt(imgWidth), r.nextInt(40));
+            Thread.sleep(1);
+            g.drawString(String.valueOf(codes[i]), 40 * i + r.nextInt(10), 30 + r.nextInt(4));
+            Thread.sleep(1);
+        }
+
+        return img;
     }
 
     /**

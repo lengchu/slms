@@ -61,10 +61,11 @@ public interface UserService {
 
     /**
      * 1.8 生成图片验证码
-     * @param code 验证码
+     * @param codes 验证码
+     * @param imgType 图片格式
      * @return 图片验证码对象
      */
-    BufferedImage genImgCode(String code);
+    BufferedImage genImgCode(char[] codes, String imgType) throws Exception;
 
     /**
      * 1.9 生成指定长度的随机长度字符
