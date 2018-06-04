@@ -39,6 +39,18 @@ public class Book implements Serializable {
         this.isBorrowed = isBorrowed;
     }
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", location='" + location + '\'' +
+                ", imgUri='" + imgUri + '\'' +
+                ", isBorrowed=" + isBorrowed +
+                '}';
+    }
+
     public Set<Type> getTypes() {
         return types;
     }
