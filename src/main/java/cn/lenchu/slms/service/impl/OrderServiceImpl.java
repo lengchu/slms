@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Service
 @Transactional
-public class OrderServiceImpl {
+public class OrderServiceImpl implements cn.lenchu.slms.service.OrderService {
     private final OrderRepository orderDao;
 
     @Autowired
@@ -27,6 +27,7 @@ public class OrderServiceImpl {
      * @param bid 书籍id
      * @return 订单对象
      */
+    @Override
     public Order saveOrder(Integer uid, Integer bid) {
         Order order = new Order();
         order.setUid(uid);
@@ -42,6 +43,7 @@ public class OrderServiceImpl {
      * @param order 通过findById查出来的订单对象
      * @return 修改后的订单对象
      */
+    @Override
     public Order backBook(Order order) {
         order.setBack(true);
         return this.orderDao.save(order);
@@ -51,6 +53,7 @@ public class OrderServiceImpl {
      * 3.3删除订单
      * @param id
      */
+    @Override
     public void deleteOrderById(Integer id) {
         this.orderDao.deleteById(id);
     }
@@ -61,6 +64,7 @@ public class OrderServiceImpl {
      * @param pageable 分页模型
      * @return 分页对象
      */
+    @Override
     public Page<Order> findOrderByUserId(Integer uid, Pageable pageable) {
         Order o = new Order();
         o.setUid(uid);
@@ -73,6 +77,7 @@ public class OrderServiceImpl {
      * @param pageable 分页模型
      * @return 分页对象
      */
+    @Override
     public Page<Order> findOrderByBookId(Integer bid, Pageable pageable) {
         Order o = new Order();
         o.setBid(bid);
@@ -86,6 +91,7 @@ public class OrderServiceImpl {
      * @param pageable 分页模型
      * @return 分页对象
      */
+    @Override
     public Page<Order> findOrderByCtimeBetween(Date start, Date end, Pageable pageable) {
         return this.orderDao.findByCtimeBetween(start, end, pageable);
     }
@@ -98,6 +104,7 @@ public class OrderServiceImpl {
      * @param pageable
      * @return
      */
+    @Override
     public Page<Order> findAllOrder(boolean isBack, Pageable pageable) {
         Order o = new Order();
         o.setBack(isBack);
@@ -109,6 +116,7 @@ public class OrderServiceImpl {
      * @param id 订单id
      * @return 订单对象
      */
+    @Override
     public Order findOrderById(Integer id) {
         return this.orderDao.findById(id).get();
     }
