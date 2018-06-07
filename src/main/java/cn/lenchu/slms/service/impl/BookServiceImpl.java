@@ -170,7 +170,7 @@ public class BookServiceImpl implements cn.lenchu.slms.service.BookService {
      */
     @Override
     public Set<Type> findAllTypeByBookId(Integer id) {
-        return this.findBookById(id).getTypes();
+        return this.bookDao.findById(id).get().getTypes();
     }
 
     /**

@@ -25,7 +25,7 @@ public class Book implements Serializable {
     @Column
     private boolean isBorrowed;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Type> types;
 
     public Book() {
