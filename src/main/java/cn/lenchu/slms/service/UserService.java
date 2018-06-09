@@ -40,7 +40,7 @@ public interface UserService {
     /**
      * 1.5 登录
      * @param email 邮箱
-     * @param pwd 原始密码
+     * @param orgPwd 原始密码
      * @return User对象,空对象则登录失败
      */
     User login(String email, String orgPwd);
