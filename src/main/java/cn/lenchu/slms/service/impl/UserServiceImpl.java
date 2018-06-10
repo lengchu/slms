@@ -62,10 +62,10 @@ public class UserServiceImpl implements cn.lenchu.slms.service.UserService {
     public String sendEmailCode(String email) {
     	SimpleMailMessage msg = new SimpleMailMessage();
     	msg.setTo(email);
-    	msg.setSubject("验证码");
+    	msg.setSubject("Verify Code");
     	String code = new String(this.genRandCode(6, true));
     	msg.setFrom(((JavaMailSenderImpl)mailSender).getUsername());
-    	msg.setText("您的验证码是: " + code + ", 请尽快完成验证!");
+    	msg.setText("Thanks for your using!\n\nYour verify code is: " + code + ", please verify soon!\n\nBest wishes to you!");
     	mailSender.send(msg);
         return code;
     }
