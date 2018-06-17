@@ -56,6 +56,16 @@ public class AuthController {
         }
     }
 
+    @PutMapping("/user")
+    public void updateUser(@SessionAttribute String email, @SessionAttribute String email_code,
+                           @RequestParam String code, @RequestParam String pwd) {
+        if (code != null && code.equals(email_code)) {
+            User u = userService.findUserByEmail(email);
+            u.setPwd(userService.encryptPwd(pwd));
+            userService.updateUser(u);
+        }
+    }
+
     @PostMapping("/user")
     public User register(@SessionAttribute(name = "email") String email, User user, @RequestParam String code,
                          @SessionAttribute(name = "email_code") String emailCode, HttpSession session,

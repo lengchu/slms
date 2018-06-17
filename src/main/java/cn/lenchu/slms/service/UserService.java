@@ -89,4 +89,11 @@ public interface UserService {
      * @param id 用户id
      */
     void deleteUserById(int id);
+
+    /**
+     * 1.12 通过邮箱查询用户
+     * @param email 邮箱
+     * @return
+     */
+    User findUserByEmail(String email);
 }

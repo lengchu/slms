@@ -189,4 +189,14 @@ public class UserServiceImpl implements cn.lenchu.slms.service.UserService {
     public void deleteUserById(int id) {
         userDao.deleteById(id);
     }
+
+    /**
+     * 1.12 通过邮箱查询用户
+     * @param email 邮箱
+     * @return
+     */
+    @Override
+    public User findUserByEmail(String email) {
+        return this.userDao.findByEmail(email);
+    }
 }
