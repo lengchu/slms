@@ -41,4 +41,11 @@ public interface AdminService {
      *      false 不存在
      */
     boolean isAdminExists(String name);
+
+    /**
+     * 4.6 通过名称查找Admin
+     * @param name 名称
+     * @return
+     */
+    Admin findByName(String name);
 }

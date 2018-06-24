@@ -84,4 +84,9 @@ public class AdminServiceImpl implements cn.lenchu.slms.service.AdminService {
     private String encryptPwd(String orgPwd) {
         return DigestUtils.md5DigestAsHex(orgPwd.getBytes());
     }
+
+    @Override
+    public Admin findByName(String name) {
+        return adminDao.findById(name).get();
+    }
 }
